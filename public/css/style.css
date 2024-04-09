@@ -1,0 +1,67 @@
+#contenido {
+    margin-bottom: 20px; /* Ajusta este valor según la altura de tu footer */
+}
+
+#botones {
+    background-color: #f4f4f4;
+    padding: 15px 0;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+@font-face {
+    font-family: 'Neue-Regular';
+    src: url('../fonts/neue-regular.ttf') format('truetype');
+}
+
+.paginas {
+    padding-top: 1em;
+    /* padding-left: 4%;
+    padding-right: 4%; */
+    padding-bottom: .5em;
+    color: #495057;
+    font-family: 'Neue-Regular', 'Roboto', 'Fira Sans', 'Segoe UI', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', 'Arial', sans-serif;
+}
+
+.oculto{
+    display: none;
+}
+
+.pregunta{
+    margin-bottom: 1.5em;
+}
+
+.pregunta input {
+    margin-left: 5px;
+    margin-right: 8px;
+}
+
+.pregunta_texto {
+    font-size: 1.3em;
+    margin-bottom: .5em;
+}
+
+.boton {
+    padding: 8px;
+}
+
+@media (min-width: 768px) {
+    .ques {
+        font-size: 1.5em;
+    }
+}
+
+/* @media (min-width: 576px) {
+    .paginas {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .paginas {
+        padding: 4%;
+    }
+} */

@@ -1,0 +1,127 @@
+import Examen_Peticiones from "../peticiones/examen.peticiones.js";
+
+var objExamen = new Examen_Peticiones()
+
+$(document).ready(function() {
+  if(typeof data_preguntas !== 'undefined'){
+    $("#layoutSidenav_content").LoadingOverlay("show");
+    agruparData(data_preguntas) 
+  }
+  
+
+  function agruparData(array) {
+    let pagina = 1;
+    let c = 1;
+    // Iterar sobre el array en pasos de 5
+    for (let i = 0; i < array.length; i += 5) {
+        // Obtener el subarray de 5 elementos
+        const subArray = array.slice(i, i + 5);
+        agregarElementos(subArray,pagina,c)
+        pagina++;
+        c +=5
+    }
+  }
+
+  function agregarElementos(preguntas,n,c) {
+    const div_pagina = $('<div>', {
+      id: 'pagina' + n,
+      class: 'pagina' + (n !== 1 ? ' oculto' : '')
+    });
+    // Recorre todas las preguntas en jsonData
+    for (const pregunta of preguntas) {
+      const pregunta_texto = pregunta.pregunta_texto;
+
+      const div_pregunta = $('<div>', {
+          class: 'card pregunta ',
+      });
+
+      const div_pregunta_texto = $('<div>', {
+          class: 'card-header pregunta_texto',
+          text: pregunta_texto
+      });
+
+      const div_respuestas = $('<div>', {
+        class: 'card-body'
+      });
+
+      const texto = $('<div>', {
+          text: 'Seleccione uno:'
+      });
+
+      div_pregunta.append(div_pregunta_texto);
+      div_respuestas.append(texto)
+      div_pregunta.append(div_respuestas);
+
+      //#region Recorre todas las respuestas de la pregunta actual
+      for (const respuesta of pregunta.respuestas) {
+        const respuesta_texto = respuesta.respuesta_texto;
+
+        const div = $('<div>');
+
+        const input = $('<input>', {
+            type: 'radio',
+            name: 'r_pregunta'+c,
+            // id: 'flexRadioDefault1'
+        });
+
+        const label = $('<label>', {
+            // for: 'flexRadioDefault1',
+            text: respuesta_texto
+        });
+
+        div.append(input);
+        div.append(label);
+        div_respuestas.append(div);
+      }
+      //#endregion
+      c++
+      div_pregunta.append(div_respuestas)
+      div_pagina.append(div_pregunta);
+      $('.paginas').append(div_pagina);
+    }    
+  }
+
+  $(".boton").click(function() {
+    // Oculta todos los contenidos
+    $(".pagina").addClass("oculto")
+
+    // Muestra el contenido correspondiente al botón clickeado
+    var target = $(this).data("target")
+    $("#" + target).removeClass("oculto")
+    window.scrollTo(0, 0);
+  });
+
+  // Captura el clic en el botón "Finalizar examen"
+  $('#btnGuardar').click(function() {
+
+    var objeto = data_preguntas
+    for (var i = 0; i < objeto.length; i++) {
+
+      var respuestas_usuario = [0, 0, 0, 0, 0];
+      
+      if(objeto[i].respuestas.length != 0){
+        $(`[name="r_pregunta${i+1}"]`).each(function(index) {
+          if($(this).is(":checked")) {
+            respuestas_usuario[index] = 1; // Marca la respuesta correspondiente en el arreglo
+          }
+        });
+        // Reemplazar el arreglo original con el nuevo arreglo 
+        objeto[i].respuestas = respuestas_usuario;
+      }
+    }
+    (async function() {
+      try {
+        var url = window.location.href;
+        var partesRuta = url.split('/');
+        var id = partesRuta[partesRuta.length - 1];
+
+        const jsonData = await objExamen.fetchResultEnviar(objeto, id);
+        console.log(jsonData)
+  
+      } catch (error) {
+        console.error('Error al obtener los datos:', error);
+      }
+    })();
+  });
+  $("#layoutSidenav_content").LoadingOverlay("hide");
+});
