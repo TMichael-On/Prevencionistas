@@ -1,14 +1,34 @@
 import Examen_Peticiones from "../peticiones/examen.peticiones.js";
 
 var objExamen = new Examen_Peticiones()
+var url = window.location.href;
+var partesRuta = url.split('/');
+var id_url = partesRuta[partesRuta.length - 1];
+var objeto
 
 $(document).ready(function() {
-  if(typeof data_preguntas !== 'undefined'){
-    $("#layoutSidenav_content").LoadingOverlay("show");
-    agruparData(data_preguntas) 
-  }
-  
+  $("#layoutSidenav_content").LoadingOverlay("show");
 
+  (async function() {
+    try {
+      const jsonData = await objExamen.fetchResultListar(id_url);
+      objeto = jsonData
+      if (jsonData.error) {
+          Swal.fire({
+              title: 'Error',
+              text: jsonData.error,
+              icon: 'error',
+              confirmButtonText: 'OK',
+          });
+      } else{
+        agruparData(jsonData)     
+      }
+      $("#layoutSidenav_content").LoadingOverlay("hide");
+    } catch (error) {
+      console.error('Error al obtener los datos:', error);
+    }
+  })();
+  
   function agruparData(array) {
     let pagina = 1;
     let c = 1;
@@ -93,8 +113,7 @@ $(document).ready(function() {
 
   // Captura el clic en el botón "Finalizar examen"
   $('#btnGuardar').click(function() {
-
-    var objeto = data_preguntas
+    $("#layoutSidenav_content").LoadingOverlay("show");    
     for (var i = 0; i < objeto.length; i++) {
 
       var respuestas_usuario = [0, 0, 0, 0, 0];
@@ -111,12 +130,18 @@ $(document).ready(function() {
     }
     (async function() {
       try {
-        var url = window.location.href;
-        var partesRuta = url.split('/');
-        var id = partesRuta[partesRuta.length - 1];
-
-        const jsonData = await objExamen.fetchResultEnviar(objeto, id);
-        console.log(jsonData)
+        const jsonData = await objExamen.fetchResultEnviar(objeto, id_url);
+        if (jsonData.error) {
+          Swal.fire({
+            title: 'Error',
+            text: jsonData.error,
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+        } else{
+          localStorage.removeItem('key');
+          window.location.href = '/notas';
+        }
   
       } catch (error) {
         console.error('Error al obtener los datos:', error);

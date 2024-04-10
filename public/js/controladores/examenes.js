@@ -1,6 +1,8 @@
 import Examen_Peticiones from "../peticiones/examen.peticiones.js";
+import Key_Peticiones from "../peticiones/key.peticiones.js";
 
-const examenObj = new Examen_Peticiones();
+const objExamen = new Examen_Peticiones();
+const objKey = new Key_Peticiones();
 
 var detalle = $("#detalle");
 var btnBuscar = $("#btnBuscar");
@@ -33,18 +35,36 @@ $(document).ready(function() {
         table.insert(data_examen);
     }
 
-    $(document).on("click", ".btn-ingresar", function(event) {
-        debugger
+    $(document).on("click", ".btn-ingresar", async function() {
+        $("#layoutSidenav_content").LoadingOverlay("show");
         var btn = $(this);
         var data = btn.data("row");
-        window.location.href = '/examen';
+        var d ={"examen_id": data}        
+        try {      
+            const jsonData = await objKey.fetchResultGenerar(d);
+            $("#layoutSidenav_content").LoadingOverlay("hide");
+            if (jsonData.error) {
+                Swal.fire({
+                    title: 'Error',
+                    text: jsonData.error,
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            } else{
+                localStorage.setItem('key', jsonData.token);
+                window.location.href = '/examen/'+data;
+                // Key-Examen
+            }
+        } catch (error) {
+            console.error('Error al obtener los datos:', error);
+        }
     });
 });
 //#endregion
 
 btnBuscar.on("click", async function() {
     try {        
-        const jsonData = await examenObj.fetchResultBuscar(detalle.val())
+        const jsonData = await objExamen.fetchResultBuscar(detalle.val())
         if (table.hasRows) {            
             table.data.data = []
             table.refresh()
@@ -56,12 +76,3 @@ btnBuscar.on("click", async function() {
         console.error('Error al obtener datos: ', error);
     }
 });
-
-// var tablaUsuario = document.getElementById("tablaUsuario");
-// table.on("click", function(event) {  
-//     if (event.target.classList.contains("btn-ingresar")) {           
-//         var btn = event.target;
-//         var data = btn.getAttribute("data-row");
-//         window.location.href = '/venta-up/'+data;
-//     }
-// });

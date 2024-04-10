@@ -21,26 +21,33 @@ $router->get('/', 'AuthController@view');
 $router->get('/examenes', 'ExamController@view');
 $router->get('/examenes/{detalle}', 'ExamController@list');
 
+
 $router->get('/examen/{id}', 'ExamController@viewExamen');
-$router->post('/examen/{id}', 'ExamController@resultado');
-
-
-
 // $router->get('/examen/{id}', 'ExamController@preguntasRespuestas');
 
 //--------------------KEY------------------------
 // $router->post('/key', 'KeyController@generate');
 
+//--------------------NOTAS------------------------
+$router->get('/notas', 'UserExamsController@view');
+
 $router->group(
     ['middleware'=>'jwt.auth'],
     function () use ($router) {
+        //----------------------KEY------------------------
         $router->post('/key', 'KeyController@generate');
+
+        //--------------------NOTAS------------------------
+        $router->get('/nota', 'UserExamsController@list');
+        $router->post('/nota/{id}', 'ExamController@resultado');
+        
     }
 );
 
 $router->group(
     ['middleware'=>['jwt.auth','jwt.key']],
     function () use ($router) {
-        // $router->get('/examenes', 'ExamController@view');
+        //------------------EXAMEN-----------------------        
+        $router->post('/examen/{id}', 'ExamController@dataPreguntas');
     }
 );

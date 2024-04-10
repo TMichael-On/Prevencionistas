@@ -33,7 +33,7 @@ class KeyMiddleware
             $credentials = JWT::decode($token, new Key(env('JWT_SECRET'), 'HS256'));
         } catch (ExpiredException $e) {
             return response()->json([
-                'error' => 'La sesión expiro'
+                'error' => 'El tiempo asignado para este examen ha finalizado. Por favor comunícate con el administrador.'
             ], 400);        
         } catch (Exception $e) {
             return response()->json([

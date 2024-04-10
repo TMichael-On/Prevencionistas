@@ -66,7 +66,7 @@
 									</form>
 									<div class="row">
 										<div class="col-12 no-pdd">					
-											<div id="mensajeError" class="alert alert-danger" role="alert">
+											<div id="mensajeError" class="alert alert-danger" role="alert" style="display: none;">
 												Mensaje
 											</div>					
 										</div>					

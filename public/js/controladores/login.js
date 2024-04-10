@@ -6,7 +6,7 @@ loginButton.addEventListener('click', function(event) {
 
   const user = document.getElementById('username_login').value;
   const password = document.getElementById('password_login').value;
-
+  
   const formData = new FormData();
   formData.append('usuario_cuenta', user);
   formData.append('usuario_clave', password);
@@ -15,19 +15,18 @@ loginButton.addEventListener('click', function(event) {
     method: 'POST',
     body: formData
   })
-  .then(response => {
-    debugger
+  .then(response => {     
     if (response.ok) {
       response.json().then(data => {
         if (data && data.token && data.usuario_id) {          
           localStorage.setItem('token', data.token);
           localStorage.setItem('id', data.usuario_id);
-          window.location.href = "/usuario";
+          window.location.href = "/examenes";
         }
       });
     } else {					
-      response.json().then(errorJson => {     
-        if (errorJson.user_clave || errorJson.user_login) {
+      response.json().then(errorJson => {          
+        if (errorJson.usuario_clave || errorJson.usuario_cuenta) {
           $("#mensajeError").text('Ingrese sus credenciales');
           $("#mensajeError").show();
         } else {

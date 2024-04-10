@@ -23,10 +23,5 @@
 @endsection
 
 @section('script')
-	@if(isset($data_preguntas))
-        <script>
-            const data_preguntas = {!! $data_preguntas !!};
-        </script>
-    @endif
 	<script src="/public/js/controladores/examen.js" type="module"></script>
 @endsection

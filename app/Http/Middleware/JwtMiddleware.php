@@ -34,7 +34,7 @@ class JwtMiddleware
             $credentials = JWT::decode($token, new Key(env('JWT_SECRET'), 'HS256'));
         } catch (ExpiredException $e) {
             return response()->json([
-                'error' => 'La sesión expiro'
+                'error' => 'La sesión expiro, vuelva a ingresar sus credenciales'
             ], 400);        
         } catch (Exception $e) {
             return response()->json([

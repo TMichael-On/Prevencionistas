@@ -48,6 +48,11 @@ class KeyController extends Controller{
             ], 400); 
         }
 
+        if(!$userExams){
+            return response()->json([
+                'error' => 'Alcanzo el número de intentos permitidos'
+            ], 500);
+        }
         return response()->json([
             'token' => $this->jwt($userExams)
         ], 200);

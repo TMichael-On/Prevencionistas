@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Examen;
 use App\Models\Pregunta;
 use App\Models\Respuesta;
+use App\Http\Controllers\UserExamsController;
 
 class ExamController extends Controller{
         
@@ -59,7 +60,7 @@ class ExamController extends Controller{
         $dataDB = $dataDB->toArray();
         //Registro de examen del usuario
         $data_usuario = $request->all();      
-        $puntaje = 0;  
+        $nota = 0;  
 
         $long = count($dataDB);
         for ($i = 0; $i < $long; $i++) {
@@ -73,13 +74,15 @@ class ExamController extends Controller{
                     $gdfg = $respuestas_DB[$n];                    
                     if ($respuestas_usuario[$n] == 1) { 
                         //la respuesta es correcta + 0.4
-                        $puntaje += 0.4;
+                        $nota += 0.4;
                     }
                 }
             }
-        }    
+        }
+        $UserExamsController = new UserExamsController();
+        $result = $UserExamsController->update($request, $id, $nota);
 
-        return $puntaje;
+        return $result;
     }
 
     public function view(){
@@ -100,4 +103,14 @@ class ExamController extends Controller{
         }
     }
 
+    public function dataPreguntas($id){
+        try {    
+            $data = $this->preguntasRespuestas($id); 
+            return $data;
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Ocurrió un error al procesar la solicitud : '. $e->getMessage()
+            ], 500);
+        }
+    }
 }

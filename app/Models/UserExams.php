@@ -13,4 +13,15 @@ class UserExams extends Model{
         'usuario_id',
         'examen_id',
     ];
+
+    public static function getData($userExams) {
+        return $userExams->map(function ($UserExams) {            
+            return [
+                'Id' => $UserExams->usuario_examen_id,
+                'Examen' => $UserExams->examen_nombre,
+                'N° de intentos' => $UserExams->usuario_examen_contador,
+                'Nota' => $UserExams->usuario_examen_nota,
+            ];
+        });
+    }    
 }
