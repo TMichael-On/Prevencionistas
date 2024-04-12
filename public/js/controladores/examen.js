@@ -124,8 +124,22 @@ $(document).ready(function() {
             respuestas_usuario[index] = 1; // Marca la respuesta correspondiente en el arreglo
           }
         });
-        // Reemplazar el arreglo original con el nuevo arreglo 
-        objeto[i].respuestas = respuestas_usuario;
+        for (var n = 0; n < respuestas_usuario.length; n++) {
+          if(respuestas_usuario[n] == 1){
+            // Reemplazar el arreglo original con el nuevo arreglo 
+            objeto[i].respuestas = respuestas_usuario
+          } else{
+            $("#layoutSidenav_content").LoadingOverlay("hide");
+            Swal.fire({
+              title: 'Error',
+              text: 'Debe marcar alguna respuesta en todas las preguntas',
+              icon: 'error',
+              confirmButtonText: 'OK',
+            })
+            return
+          }
+        }
+        
       }
     }
     (async function() {

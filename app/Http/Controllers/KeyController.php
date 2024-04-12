@@ -24,7 +24,7 @@ class KeyController extends Controller{
             'iss' => "api-jwt",
             'sub' => $userExams->usuario_examen_id,
             'iat' => time(),
-            'exp' => time() + 60 * 60
+            'exp' => time() + 120 * 60
         ];
         return JWT::encode($payload, env('JWT_SECRET'), 'HS256');
     }

@@ -20,7 +20,7 @@ class AuthController extends Controller{
             'iss' => "api-jwt",
             'sub' => $usuario->usuario_id,
             'iat' => time(),
-            'exp' => time() + 120 * 60
+            'exp' => time() + 180 * 60
         ];
         return JWT::encode($payload, env('JWT_SECRET'), 'HS256');
     }
