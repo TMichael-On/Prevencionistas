@@ -15,11 +15,13 @@
         <link href="/public/sweetalert2/sweetalert2.min.css" rel="stylesheet">
     </head>
     <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-primary">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">Examen</a>            
+            <a class="navbar-brand ps-3" href="/examenes">Examen</a>   
+            <a class="navbar-brand ps-3" href="/notas">Notas</a>            
+            <div class ="navbar-brand ms-auto me-2" style="width:auto;" id="nav-usuario"></div>
             <!-- Navbar-->
-            <ul class="navbar-nav ms-auto me-3 me-lg-4"><!-- ms-md-0-->
+            <ul class="navbar-nav me-3 me-lg-4"><!--ms-auto ms-md-0-->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -46,7 +48,8 @@
         <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script> -->
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
         <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
-        <script src="/public/sweetalert2/sweetalert2.all.min.js" type="text/javascript">></script>
+        <script src="/public/sweetalert2/sweetalert2.all.min.js" type="text/javascript"></script>
+        <script src="/public/js/controladores/layout.js" type="text/javascript"></script>
         @yield('script')
     </body>
 </html>

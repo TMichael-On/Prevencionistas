@@ -5,7 +5,7 @@ var table;
 
 //#region Metodos para inicializar la TABLE examen
 let dataExamen = {
-    headings: ['Id', 'Examen', 'N° de intentos', 'Nota'],
+    headings: ['Id', 'Examen', 'N° de intentos', 'Nota', 'Estado'],
 };
 
 var opciones = {

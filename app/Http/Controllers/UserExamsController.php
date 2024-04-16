@@ -58,8 +58,7 @@ class UserExamsController extends Controller{
         }
     }
 
-    public function validar($request)
-    {
+    public function validar($request){
         if (!$request->header('Authorization')) {
             return response()->json([
                 'error' =>'Usted no cuenta con los permisos necesarios'

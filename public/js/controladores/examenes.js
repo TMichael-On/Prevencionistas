@@ -19,7 +19,7 @@ var opciones = {
     columns: [
         {
         select: 4,
-        render: function(data, td, id, cellIndex) {
+        render: function(data, td, id, cellIndex) {            
             if(data.length !== 0){
                 return `<button type='button' class='btn btn-primary btn-sm ms-2 btn-ingresar' data-row='${[data[0].data]}'>Ingresar</button>`;
             }

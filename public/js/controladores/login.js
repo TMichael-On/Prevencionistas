@@ -9,18 +9,17 @@ loginButton.addEventListener('click', function(event) {
   
   const formData = new FormData();
   formData.append('usuario_cuenta', user);
-  formData.append('usuario_clave', password);
-    
+  formData.append('usuario_clave', password);  
   fetch('/acceso', {
     method: 'POST',
     body: formData
   })
   .then(response => {     
     if (response.ok) {
-      response.json().then(data => {
-        if (data && data.token && data.usuario_id) {          
+      response.json().then(data => {        
+        if (data && data.token && data.usuario_) {          
           localStorage.setItem('token', data.token);
-          localStorage.setItem('id', data.usuario_id);
+          sessionStorage.setItem('usuario', data.usuario_);
           window.location.href = "/examenes";
         }
       });

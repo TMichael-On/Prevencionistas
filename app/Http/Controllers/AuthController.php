@@ -42,7 +42,7 @@ class AuthController extends Controller{
         if ($hashMD5_clave == $usuario->usuario_clave){
             return response()->json([
                 'token' => $this->jwt($usuario),
-                'usuario_id' => $usuario->usuario_id
+                'usuario_' => $usuario->usuario_nombre
             ], 200);   
         }
         

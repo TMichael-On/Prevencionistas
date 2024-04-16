@@ -104,7 +104,9 @@ $(document).ready(function() {
   $(".boton").click(function() {
     // Oculta todos los contenidos
     $(".pagina").addClass("oculto")
-
+    $(".boton").removeClass("btn-primary");
+    $(this).addClass("btn-primary");
+    
     // Muestra el contenido correspondiente al botón clickeado
     var target = $(this).data("target")
     $("#" + target).removeClass("oculto")
@@ -117,6 +119,7 @@ $(document).ready(function() {
     for (var i = 0; i < objeto.length; i++) {
 
       var respuestas_usuario = [0, 0, 0, 0, 0];
+      var array_ok = false
       
       if(objeto[i].respuestas.length != 0){
         $(`[name="r_pregunta${i+1}"]`).each(function(index) {
@@ -126,20 +129,22 @@ $(document).ready(function() {
         });
         for (var n = 0; n < respuestas_usuario.length; n++) {
           if(respuestas_usuario[n] == 1){
-            // Reemplazar el arreglo original con el nuevo arreglo 
-            objeto[i].respuestas = respuestas_usuario
-          } else{
-            $("#layoutSidenav_content").LoadingOverlay("hide");
-            Swal.fire({
-              title: 'Error',
-              text: 'Debe marcar alguna respuesta en todas las preguntas',
-              icon: 'error',
-              confirmButtonText: 'OK',
-            })
-            return
-          }
+            array_ok = true   
+          } 
         }
-        
+        if (array_ok) {
+          // Reemplazar el arreglo original con el nuevo arreglo 
+          objeto[i].respuestas = respuestas_usuario
+        } else{
+          $("#layoutSidenav_content").LoadingOverlay("hide");
+          Swal.fire({
+            title: 'Error',
+            text: 'Debe marcar alguna respuesta en todas las preguntas',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          })
+          return
+        }
       }
     }
     (async function() {
