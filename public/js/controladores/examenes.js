@@ -51,9 +51,17 @@ $(document).ready(function() {
                     confirmButtonText: 'OK',
                 });
             } else{
-                localStorage.setItem('key', jsonData.token);
-                window.location.href = '/examen/'+data;
-                // Key-Examen
+                Swal.fire({
+                    title: 'Recordatorio',
+                    text: '¡Hola! Solo quería recordarte que para cada examen tienes tres oportunidades para obtener la mejor nota posible. Esto significa que si no estás satisfecho con tu primera nota, ¡tienes dos intentos más para mejorarla! Tú decides si prefieres hacer el examen una sola vez o aprovechar los tres intentos. ¡Buena suerte!',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        localStorage.setItem('key', jsonData.token);
+                        window.location.href = '/examen/'+data;
+                    }
+                });              
             }
         } catch (error) {
             console.error('Error al obtener los datos:', error);

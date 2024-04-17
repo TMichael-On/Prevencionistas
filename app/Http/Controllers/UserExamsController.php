@@ -90,9 +90,10 @@ class UserExamsController extends Controller{
                 ->first();
 
             if($datos){
-                $datos->usuario_examen_nota = $nota;
-                $datos->save();
-
+                if ($nota > $datos->usuario_examen_nota) {                    
+                    $datos->usuario_examen_nota = $nota;
+                    $datos->save();
+                }
                 return response()->json([
                     'message' => 'registro guardado correctamente'
                 ]);

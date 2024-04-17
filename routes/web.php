@@ -23,10 +23,6 @@ $router->get('/examenes/{detalle}', 'ExamController@list');
 
 
 $router->get('/examen/{id}', 'ExamController@viewExamen');
-// $router->get('/examen/{id}', 'ExamController@preguntasRespuestas');
-
-//--------------------KEY------------------------
-// $router->post('/key', 'KeyController@generate');
 
 //--------------------NOTAS------------------------
 $router->get('/notas', 'UserExamsController@view');
